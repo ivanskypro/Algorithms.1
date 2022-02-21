@@ -105,5 +105,9 @@ public class Main {
         System.out.println();
         System.out.println(intList.contains(25));
         intList.clear();
+
+        System.out.println(intList.size());
+
+        intList.quickSort(1,intList.size()-1);
 }
 }

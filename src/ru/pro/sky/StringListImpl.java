@@ -6,7 +6,7 @@ public class StringListImpl implements StringList {
 
     private String[] list;
     private int size;
-    private static final int CAPACITY = 5;
+    private static final int CAPACITY = 10;
 
     public StringListImpl() {
         this(CAPACITY);
@@ -160,7 +160,7 @@ public class StringListImpl implements StringList {
 
     private void isItemNotNull(String item) {
         if (item == null) {
-            throw new IllegalArgumentException("Item can't be null");
+            throw new IllegalArgumentException("Объект равен null");
         }
     }
     private String[] extend() {

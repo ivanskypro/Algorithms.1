@@ -138,20 +138,46 @@ public class IntListImpl implements IntList{
         return Arrays.copyOf(intList, intList.length);
     }
 
-
-    private void sortSelection() {
-        for (int i = 0; i < size - 1; i++) {
-            int minElementIndex = i;
-            for (int j = i + 1; j < size; j++) {
-                if (intList[j] < intList[minElementIndex]) {
-                    minElementIndex = j;
-                }
-            }
-            int tmp = intList[i];
-            intList[i] = intList[minElementIndex];
-            intList[minElementIndex] = tmp;
+    public void quickSort(int begin, int end) {
+        if (begin < end) {
+            Integer partitionIndex = partition(begin, end);
+            quickSort(begin, partitionIndex - 1);
+            quickSort(partitionIndex + 1, end);
         }
     }
+
+    private int partition(int begin, int end) {
+        int pivot = intList[end];
+        int i = (begin - 1);
+        for (int j = begin; j < end; j++) {
+            if (intList[j] <= pivot) {
+                i++;
+                swapElements(intList, i, j);
+            }
+        }
+        swapElements(intList, i + 1, end);
+        return i + 1;
+    }
+
+    private void swapElements(Integer[] data, int indexA, int indexB) {
+        int tmp = data[indexA];
+        data[indexA] = data[indexB];
+        data[indexB] = tmp;
+    }
+
+   // private void sortSelection() {
+   //     for (int i = 0; i < size - 1; i++) {
+   //         int minElementIndex = i;
+   //         for (int j = i + 1; j < size; j++) {
+   //             if (intList[j] < intList[minElementIndex]) {
+   //                 minElementIndex = j;
+   //             }
+   //         }
+   //         int tmp = intList[i];
+   //         intList[i] = intList[minElementIndex];
+   //         intList[minElementIndex] = tmp;
+   //     }
+   // }
 
     private boolean binarySearch(Integer item) {
         int min = 0;
@@ -172,7 +198,7 @@ public class IntListImpl implements IntList{
 
     @Override
     public boolean contains(Integer item) {
-        sortSelection();
+        //sortSelection();
         if (binarySearch(item)) {
             return true;
         }
@@ -193,7 +219,7 @@ public class IntListImpl implements IntList{
 
     private void isArrayNotFull() {
         if (size == intList.length) {
-            intList = extend();
+            intList = grow();
         }
     }
 
@@ -203,7 +229,7 @@ public class IntListImpl implements IntList{
         }
     }
 
-    private Integer[] extend() {
+    private Integer[] grow() {
         return Arrays.copyOf(intList, size * 2);
     }
 
